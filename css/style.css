@@ -22,9 +22,22 @@ iframe {
   height: 90%;
 }
 
+.tree {
+  margin-left: 1%;
+  float: left;
+  height: 9%;
+  margin-top: 0.5%;
+}
+
+.tree img {
+  height: 100%;
+}
+
 .statistic {
   float: left;
   margin-top: 1%;
+  height: 100%;
+  min-width: 15%;
 }
 
 .statistic::after {
