@@ -1,0 +1,47 @@
+html,
+body {
+  background-color: #B11E31;
+  height: 99%;
+  width: 100%;
+  overflow: hidden;
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
+  border: 0;
+  z-index: 1;
+}
+
+.content {
+  height: 100%;
+  width: 99%;
+}
+
+.video-wrapper {
+  height: 90%;
+}
+
+.panel {
+  position: relative;
+  min-height: 10%;
+  padding: 1%;
+}
+
+.button {
+  background-color: #1E792C;
+  margin: 0;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.button:hover {
+  background-color: #196424;
+}
