@@ -1,3 +1,5 @@
+const SNOWFLAKE_AMOUNT = 100;
+const YOUTUBE_LINK_TEMPLATE = `<a href='https://youtu.be/%VIDEO_ID%' target='_blank'>%VIDEO_ID%</a>`;
 const VIDEO_IDS = [
     'nrM1gk_yeDs',
     'IvAbKoKYTfE',
@@ -22,7 +24,7 @@ const VIDEO_IDS = [
     '0SZkDJItgK8',
     '-cJzVRP3MjY',
 ];
-const SNOWFLAKE_AMOUNT = 100;
+
 
 let lastVideoId = null;
 let player;
@@ -31,15 +33,20 @@ function initPlayer() {
     let interval = setInterval(
         function () {
             try {
+                let nextVideoId = getRandomVideoId();
+                updateStatistic(nextVideoId);
+
                 player = new YT.Player('player', {
                     height: '100%',
                     width: '100%',
-                    videoId: nextRandomVideo(),
+                    videoId: nextVideoId ,
                     autoplay: 1,
                     events: {
                         onStateChange: function(event) {
-                            if (event.data === YT.PlayerState.ENDED){
-                                player.loadVideoById(nextRandomVideo());
+                            if (event.data === YT.PlayerState.ENDED) {
+                                if (document.getElementById('autoplay').checked) {
+                                    playNextVideo(getRandomVideoId());
+                                }
                             }
                         }
                     }
@@ -48,6 +55,7 @@ function initPlayer() {
             } finally {
                 if (typeof player !== 'undefined') {
                     clearInterval(interval);
+                    setTimeout(() => {player.playVideo()}, 1000);
                 }
             }
         },
@@ -59,7 +67,7 @@ function randomNumber (max) {
     return Math.floor(Math.random() * max)
 }
 
-function nextRandomVideo () {
+function getRandomVideoId () {
     let nextVideoId = null;
 
     do {
@@ -70,6 +78,15 @@ function nextRandomVideo () {
     lastVideoId = nextVideoId;
 
     return lastVideoId;
+}
+
+function playNextVideo(videoId) {
+    updateStatistic(videoId);
+    player.loadVideoById(videoId);
+}
+
+function updateStatistic(videoId) {
+    document.getElementById('current-song').innerHTML = YOUTUBE_LINK_TEMPLATE.replaceAll('%VIDEO_ID%', videoId);
 }
 
 function initSnow () {
@@ -84,18 +101,20 @@ function initSnow () {
         snowflake.classList.add('snowflake');
         snowflake.style.left = left + '%';
         snowflake.style.animationDelay = delayOne + 's, ' + delayTwo + 's';
-        snowflake.style.webkitAnimationDelay = delayOne + 's, ' + delayTwo + 's';;
+        snowflake.style.webkitAnimationDelay = delayOne + 's, ' + delayTwo + 's';
         snowflake.innerHTML = '❆';
         wrapper.appendChild(snowflake);
     }
 }
 
 (function() {
+    document.getElementById('songs-amount').innerHTML = VIDEO_IDS.length;
     initSnow();
 
     setTimeout(initPlayer, 100);
 
     document.getElementById('random-video-button').addEventListener('click', () => {
-        nextRandomVideo();
+        let videoId = getRandomVideoId();
+        playNextVideo(videoId);
     });
 })();
