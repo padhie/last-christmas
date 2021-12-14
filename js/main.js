@@ -1,4 +1,3 @@
-const IFRAME_TEMPLATE = `<iframe src="https://www.youtube.com/embed/%VIDEO_ID%?autoplay=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>`
 const VIDEO_IDS = [
     'nrM1gk_yeDs',
     'IvAbKoKYTfE',
@@ -6,26 +5,22 @@ const VIDEO_IDS = [
 ];
 const SNOWFLAKE_AMOUNT = 100;
 
+let lastVideoId = null;
 let player;
 
 function initPlayer() {
-    let randomIndex = randomNumber(VIDEO_IDS.length);
-    let videoId = VIDEO_IDS[randomIndex];
-
     let interval = setInterval(
         function () {
             try {
                 player = new YT.Player('player', {
                     height: '100%',
                     width: '100%',
-                    videoId: videoId,
+                    videoId: nextRandomVideo(),
                     autoplay: 1,
                     events: {
                         onStateChange: function(event) {
-                            console.log(YT.PlayerState.ENDED);
-                            console.log(event.data);
                             if (event.data === YT.PlayerState.ENDED){
-                                console.log("a");
+                                player.loadVideoById(nextRandomVideo());
                             }
                         }
                     }
@@ -46,12 +41,16 @@ function randomNumber (max) {
 }
 
 function nextRandomVideo () {
-    let randomIndex = randomNumber(VIDEO_IDS.length);
-    let videoId = VIDEO_IDS[randomIndex];
-    let iframe = IFRAME_TEMPLATE.replace('%VIDEO_ID%', videoId);
+    let nextVideoId = null;
 
-    let videoWrapper = document.getElementsByClassName('video-wrapper')[0];
-    // videoWrapper.innerHTML = iframe;
+    do {
+        let randomIndex = randomNumber(VIDEO_IDS.length);
+        nextVideoId = VIDEO_IDS[randomIndex];
+    } while(lastVideoId !== null && nextVideoId === lastVideoId);
+
+    lastVideoId = nextVideoId;
+
+    return lastVideoId;
 }
 
 function initSnow () {

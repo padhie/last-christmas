@@ -25,7 +25,6 @@ iframe {
 .panel {
   position: relative;
   min-height: 10%;
-  padding: 1%;
 }
 
 .button {
@@ -44,4 +43,10 @@ iframe {
 
 .button:hover {
   background-color: #196424;
+}
+
+.imprint {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
