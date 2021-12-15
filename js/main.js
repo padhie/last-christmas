@@ -1,6 +1,6 @@
 const SNOWFLAKE_AMOUNT = 100;
 const YOUTUBE_LINK_TEMPLATE = `<a href='https://youtu.be/%VIDEO_ID%' target='_blank'>%VIDEO_ID%</a>`;
-const VIDEO_IDS = [
+const VIDEOS = [
     'nrM1gk_yeDs',
     'IvAbKoKYTfE',
     'GOFEEp4JJSo',
@@ -23,17 +23,22 @@ const VIDEO_IDS = [
     't3iqo72Dfow',
     '0SZkDJItgK8',
     '-cJzVRP3MjY',
-];
+].sort(()=> Math.random() - 0.5);
 
 
-let lastVideoId = null;
+let lastVideoIndex = -1;
 let player;
+let errors = [];
 
 function initPlayer() {
+    if (document.getElementById('player') === undefined) {
+        return;
+    }
+
     let interval = setInterval(
         function () {
             try {
-                let nextVideoId = getRandomVideoId();
+                let nextVideoId = getNextVideoId();
                 updateStatistic(nextVideoId);
 
                 player = new YT.Player('player', {
@@ -45,13 +50,14 @@ function initPlayer() {
                         onStateChange: function(event) {
                             if (event.data === YT.PlayerState.ENDED) {
                                 if (document.getElementById('autoplay').checked) {
-                                    playNextVideo(getRandomVideoId());
+                                    playNextVideo(getNextVideoId());
                                 }
                             }
                         }
                     }
                 });
             } catch (exception) {
+                errors.push(exception);
             } finally {
                 if (typeof player !== 'undefined') {
                     clearInterval(interval);
@@ -67,17 +73,14 @@ function randomNumber (max) {
     return Math.floor(Math.random() * max)
 }
 
-function getRandomVideoId () {
-    let nextVideoId = null;
+function getNextVideoId () {
+    if (lastVideoIndex+1 >= VIDEOS.length) {
+        lastVideoIndex = 0;
+    } else {
+        lastVideoIndex++;
+    }
 
-    do {
-        let randomIndex = randomNumber(VIDEO_IDS.length);
-        nextVideoId = VIDEO_IDS[randomIndex];
-    } while(lastVideoId !== null && nextVideoId === lastVideoId);
-
-    lastVideoId = nextVideoId;
-
-    return lastVideoId;
+    return VIDEOS[lastVideoIndex];
 }
 
 function playNextVideo(videoId) {
@@ -107,14 +110,19 @@ function initSnow () {
     }
 }
 
-(function() {
-    document.getElementById('songs-amount').innerHTML = VIDEO_IDS.length;
-    initSnow();
+function printErrors() {
+    for (let i=0; i<errors.length; i++) {
+        console.error(errors[i]);
+    }
+}
 
+(function() {
+    document.getElementById('songs-amount').innerHTML = VIDEOS.length;
+    initSnow();
     setTimeout(initPlayer, 100);
 
     document.getElementById('random-video-button').addEventListener('click', () => {
-        let videoId = getRandomVideoId();
+        let videoId = getNextVideoId();
         playNextVideo(videoId);
     });
 })();
