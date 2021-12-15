@@ -60,6 +60,10 @@ export class YtPlayer {
         return this.lastVideoId;
     }
 
+    getCurrentVideoId() {
+        return this.lastVideoId;
+    }
+
 
     playNextVideo() {
         let nextVideoId = this.getNextVideoId();

@@ -37,23 +37,36 @@ export class App {
     }
 
     run() {
+        this.startSnow();
+        this.startYtPlayer();
+    }
+
+    startSnow() {
         console.info('start snowflakes');
         const snow = new Snow(
             document.getElementById(SNOWFLAKE_WRAPPER_ID),
             SNOWFLAKE_AMOUNT
         );
         snow.init();
+    }
 
+    startYtPlayer() {
         console.info('start yt player');
-        const ytPlayer = new YtPlayer(this.YT, PLAYER_ID, VIDEOS);
-        ytPlayer.shuffleVideos();
-        ytPlayer.setVideoEndsEventCallback((nextVideoId) => {
+
+        const videoEndsEventCallback = (nextVideoId) => {
             document.getElementById('current-song').innerHTML = YOUTUBE_LINK_TEMPLATE.replaceAll('%VIDEO_ID%', nextVideoId);
-        });
+        };
+        const ytPlayer = new YtPlayer(this.YT, PLAYER_ID, VIDEOS);
+
+        ytPlayer.shuffleVideos();
+        ytPlayer.setVideoEndsEventCallback(videoEndsEventCallback);
         ytPlayer.init();
+
+        videoEndsEventCallback(ytPlayer.getCurrentVideoId());
 
         document.getElementById('next-video-button').addEventListener('click', () => {
             ytPlayer.playNextVideo();
         });
+
     }
 }

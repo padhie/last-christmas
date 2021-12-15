@@ -1,0 +1,38 @@
+.statistic {
+    position: relative;
+    float: left;
+    margin-top: 1%;
+    height: 100%;
+    min-width: 15%;
+}
+
+.statistic::after {
+    clear: both;
+}
+
+.panel-wrapper {
+    position: relative;
+}
+
+.panel {
+    margin-top: 3%;
+    min-height: 10%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    background-color: #1E792C;
+    margin: 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.button:hover {
+    background-color: #196424;
+}

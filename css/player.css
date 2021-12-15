@@ -1,0 +1,10 @@
+iframe {
+    height: 100%;
+    width: 100%;
+    border: 0;
+    z-index: 1;
+}
+
+.video-wrapper {
+    height: 90%;
+}
