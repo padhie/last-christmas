@@ -62,6 +62,7 @@ export class App {
         ytPlayer.setVideoEndsEventCallback(videoEndsEventCallback);
         ytPlayer.init();
 
+        document.getElementById('songs-amount').innerHTML = VIDEOS.length;
         videoEndsEventCallback(ytPlayer.getCurrentVideoId());
 
         document.getElementById('next-video-button').addEventListener('click', () => {
