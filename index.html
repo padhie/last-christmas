@@ -2,56 +2,55 @@
 <html class="no-js" lang="">
 
 <head>
-  <meta charset="utf-8">
-  <title>Last Christmas randomizer</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Last Christmas randomizer</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="apple-touch-icon" href="img/192x192.png">
-  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/192x192.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/snow.css">
+    <link rel="stylesheet" href="css/main.css">
 
-  <script src="https://www.youtube.com/player_api"></script>
+    <script src="https://www.youtube.com/player_api"></script>
 </head>
 
 <body>
 
-  <div class="content">
+<div class="content">
     <div class="video-wrapper">
-      <div id="player"></div>
+        <div id="player"></div>
     </div>
 
     <div class="statistic">
-      <span id="songs-amount">0</span> Songs<br>
-      Current: <span id="current-song"></span>
-    </div>
-
-    <div class="tree">
-      <img src="img/tree.svg" alt="SVG mit img Tag laden">
+        <span id="songs-amount">0</span> Songs<br>
+        Current: <span id="current-song"></span>
     </div>
 
     <div class="panel-wrapper">
-      <div class="panel">
-        <span id="random-video-button" class="button">randomize</span><br />
-        <div class="autoplay">
-          <input type="checkbox" id="autoplay" checked="checked">
-          <label for="autoplay">Autoplay</label>
+        <div class="panel">
+            <span id="next-video-button" class="button">next</span>
         </div>
-      </div>
     </div>
 
     <div class="links">
-      <a href="https://github.com/padhie/xmas" target="_blank">Github</a>
-      <a href="https://twitter.com/PuddyPadhie" target="_blank">@PuddyPadhie</a>
-      <a href="https://padhie.de/impressum.html" target="_blank">imprint</a>
+        <a href="https://github.com/padhie/xmas" target="_blank">Github</a>
+        <a href="https://twitter.com/PuddyPadhie" target="_blank">@PuddyPadhie</a>
+        <a href="https://padhie.de/impressum.html" target="_blank">imprint</a>
     </div>
-  </div>
+</div>
 
-  <div id="snowflakes-wrapper"></div>
+<div id="snowflakes-wrapper"></div>
 
-  <script src="js/main.js"></script>
+<script type="module" src="js/app.js"></script>
+<script type="module">
+    import {App} from './js/app.js';
+
+    YT.ready(function() {
+        (new App(YT)).run();
+    });
+</script>
+
 </body>
 
 </html>

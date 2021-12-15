@@ -4,6 +4,10 @@ body {
   height: 99%;
   width: 100%;
   overflow: hidden;
+  background-image: url('/img/tree.svg');
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: 5% 10%;
 }
 
 iframe {
@@ -22,18 +26,8 @@ iframe {
   height: 90%;
 }
 
-.tree {
-  margin-left: 1%;
-  float: left;
-  height: 9%;
-  margin-top: 0.5%;
-}
-
-.tree img {
-  height: 100%;
-}
-
 .statistic {
+  position: relative;
   float: left;
   margin-top: 1%;
   height: 100%;
@@ -61,7 +55,7 @@ iframe {
 .button {
   background-color: #1E792C;
   margin: 0;
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.5s ease;
@@ -69,10 +63,6 @@ iframe {
 
 .button:hover {
   background-color: #196424;
-}
-
-.autoplay {
-  margin-top: 10%;
 }
 
 .links {
